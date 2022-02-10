@@ -25,12 +25,13 @@ func FindWinner(order []int, boards []*data.Board) int {
 // unmarked values in the board.
 func FindLastBoard(order []int, boards []*data.Board) int {
 	n_boards := len(boards)
-	board_status := [100]bool{false}
+	board_status := make(map[int]bool)
 	winning_boards := 0
 
 	for _, val := range order {
 		for i, b := range boards {
-			if !board_status[i] {
+			_, ok := board_status[i]
+			if !ok {
 				b.MarkValue(val)
 				bingo := b.CheckBingo()
 				if bingo {
