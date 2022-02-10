@@ -41,8 +41,8 @@ func main() {
 	}
 
 	if winner {
-		fmt.Printf("Winner value is %d", play.FindWinner(order, boards))
-		} else {
-		fmt.Printf("Loser value is %d", play.FindLastBoard(order, boards))
+		fmt.Printf("Winner value is %d \n", play.FindWinner(order, boards))
+	} else {
+		fmt.Printf("Loser value is %d \n", play.FindLastBoard(order, boards))
 	}
 }
