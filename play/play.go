@@ -38,19 +38,15 @@ func FindLastBoard(order []int, boards []*data.Board) int {
 	for _, val := range order {
 		for _, board := range boards {
 			board.MarkValue(val)
-			bingo := board.CheckBingo()
+			var bingo bool = board.CheckBingo()
 
 			if bingo && !bingoed[board] {
 				bingoed[board] = true
 				bingoed_count++
 			}
 
-			if bingoed_count == (board_init_count - 1) {
-				for key, _ := range bingoed {
-					if !bingoed[key] {
-						return val * key.AddUnmarked()
-					}
-				}
+			if bingoed_count == board_init_count {
+				return val * board.AddUnmarked()
 			}
 
 			// For some reason the plan didn't work
