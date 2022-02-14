@@ -34,8 +34,8 @@ func (b *Board) MarkValue(num int) {
 	}
 }
 
-// Let's check for a row 
-func (b *Board) CheckBingoRow(row int) bool {
+// Let's check for a row
+func (b *Board) CheckforRow(row int) bool {
 	col := 0
 	for col < 5 {
 		if !b[row][col].Marked {
@@ -46,8 +46,8 @@ func (b *Board) CheckBingoRow(row int) bool {
 	return true
 }
 
-// Let's check for a column
-func (b *Board) CheckBingoCol(col int) bool {
+//  Let's check for a column
+func (b *Board) CheckforCol(col int) bool {
 	row := 0
 	for row < 5 {
 		if !b[row][col].Marked {
@@ -62,7 +62,7 @@ func (b *Board) CheckBingoCol(col int) bool {
 func (b *Board) CheckBingo() bool {
 	i := 0
 	for i < 5 {
-		if b.CheckBingoRow(i) || b.CheckBingoCol(i) {
+		if b.CheckforRow(i) || b.CheckforCol(i) {
 			return true
 		}
 		i = i + 1
