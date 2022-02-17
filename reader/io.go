@@ -12,7 +12,8 @@ import (
 
 // GetScanner returns a scanner for the given file.
 func GetScanner(f io.Reader) *bufio.Scanner {
-	return nil
+	scanner := bufio.NewScanner(f)
+	return scanner
 }
 
 // ReadOrder reads the order of values to mark in bingo game from the given scanner.
@@ -44,5 +45,33 @@ func ReadOrder(scanner *bufio.Scanner) ([]int, error) {
 
 // ReadBoard reads a single board from the given scanner.
 func ReadBoard(scanner *bufio.Scanner) (*data.Board, error) {
-	return nil, nil
+	var err error
+	newBoard := data.NewBoard()
+	for i := 0; i < 5; i++ {
+		if scanner.Scan() {
+			line := scanner.Text()
+			if line == "" || line == "\n" {
+				return nil, errors.New("empty line")
+			}
+			val := strings.Fields(line)
+			row := make([]int, len(val))
+			for j, v := range val {
+				row[j], err = strconv.Atoi(v)
+				if err != nil {
+					return nil, err
+				}
+				h := data.Holder{
+					Val:    row[j],
+					Marked: false,
+				}
+				newBoard[i][j] = h
+			}
+		} else {
+			if err = scanner.Err(); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return newBoard, nil
 }

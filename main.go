@@ -14,7 +14,7 @@ func logError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
+}	
 
 func main() {
 	filename := os.Args[1]

@@ -4,13 +4,21 @@ type Board [5][5]Holder
 
 // Returns a new 2D board
 func NewBoard() *Board {
-	return nil
+	newBoard := Board{}
+	return &newBoard
 }
 
 // FindNumber finds the given number in the board and returns
 // the row and column of the number alongwith true if value was found
 // else returns (-1, -1, false)
 func (b *Board) FindNumber(num int) (int, int, bool) {
+	for i := 0; i < 5; i++ {
+		for j := 0; j < 5; j++ {
+			if b[i][j].Val == num {
+				return (i), (j), true
+			}
+		}
+	}
 	return -1, -1, false
 }
 
@@ -24,12 +32,41 @@ func (b *Board) MarkValue(num int) {
 
 // CheckBingo checks if the board is bingo or not
 func (b *Board) CheckBingo() bool {
+	for i := 0; i < 5; i++ {
+		a0 := b[i][0].Marked
+		a1 := b[i][1].Marked
+		a2 := b[i][2].Marked
+		a3 := b[i][3].Marked
+		a4 := b[i][4].Marked
+		if a0 && a1 && a2 && a3 && a4 {
+			return true
+		}
+	}
+
+	for i := 0; i < 5; i++ {
+		a0 := b[0][i].Marked
+		a1 := b[1][i].Marked
+		a2 := b[2][i].Marked
+		a3 := b[3][i].Marked
+		a4 := b[4][i].Marked
+		if a0 && a1 && a2 && a3 && a4 {
+			return true
+		}
+	}
 	return false
 }
 
 // AddUnmarked adds the unmarked values in the board
 func (b *Board) AddUnmarked() int {
-	return 0
+	sum := 0
+	for i := 0; i < 5; i++ {
+		for j := 0; j < 5; j++ {
+			if !b[i][j].Marked {
+				sum += b[i][j].Val
+			}
+		}
+	}
+	return sum
 }
 
 // Holder stores information about a particular
