@@ -13,7 +13,7 @@ func FindWinner(order []int, boards []*data.Board) int {
 			b.MarkValue(val)
 			bingo := b.CheckBingo()
 			if bingo {
-				return val*b.AddUnmarked()
+				return val * b.AddUnmarked()
 			}
 		}
 	}
@@ -24,5 +24,23 @@ func FindWinner(order []int, boards []*data.Board) int {
 // returns the iteration value multiplied by addition of
 // unmarked values in the board.
 func FindLastBoard(order []int, boards []*data.Board) int {
-	return 0
+
+	var loserBoardScore int
+	loserBoardTurns := -1
+
+	for _, board := range boards {
+		isBingoed := false
+		for turn, val := range order {
+			board.MarkValue(val)
+			if !isBingoed && board.CheckBingo() {
+				if turn > loserBoardTurns {
+					loserBoardTurns = turn
+					loserBoardScore = val * board.AddUnmarked()
+				}
+				isBingoed = true
+			}
+		}
+	}
+
+	return loserBoardScore
 }
